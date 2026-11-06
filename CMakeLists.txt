@@ -42,6 +42,13 @@ set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TQT_CXX_FLAGS}" )
 set( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined" )
 set( CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--no-undefined" )
 
+# the TDE macros do not pass the linker flags of the environment
+# (e.g. the hardening flags of dpkg-buildflags) to every target
+if( DEFINED ENV{LDFLAGS} )
+  separate_arguments( _env_ldflags UNIX_COMMAND "$ENV{LDFLAGS}" )
+  add_link_options( ${_env_ldflags} )
+endif( )
+
 ##### directories
 
 add_subdirectory( src )

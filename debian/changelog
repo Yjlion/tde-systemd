@@ -1,0 +1,11 @@
+tde-systemd (1.0.0) unstable; urgency=medium
+
+  * Initial release.
+    - Systemd Manager with overview, services, timers, date & time,
+      hostname and locale pages for the system and user managers.
+    - Journal Viewer with filters, follow mode, export and maintenance.
+    - TDE Control Center modules.
+    - polkit authorized helper for system changes.
+    - Handbook and manual pages.
+
+ -- Yjlion <32956705+Yjlion@users.noreply.github.com>  Fri, 06 Nov 2026 12:00:00 -0500

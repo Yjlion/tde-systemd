@@ -1,0 +1,97 @@
+.\" Manual page for tde-journal-viewer
+.\" Copyright (C) 2026 tde-systemd developers
+.\" Licensed under the GNU General Public License version 2 or later.
+.TH TDE-JOURNAL-VIEWER 1 "November 2026" "tde-systemd 1.0.0" "Trinity Desktop Environment"
+.SH NAME
+tde-journal-viewer \- view and maintain the systemd journal in TDE
+.SH SYNOPSIS
+.B tde-journal-viewer
+[\fB\-u\fR|\fB\-\-user\fR]
+[\fB\-\-unit\fR \fIunit\fR]
+[\fB\-p\fR|\fB\-\-priority\fR \fIlevel\fR]
+[\fB\-b\fR|\fB\-\-boot\fR \fIoffset\fR]
+[\fB\-f\fR|\fB\-\-follow\fR]
+[\fB\-\-maintenance\fR]
+[\fIgeneric TDE and Qt options\fR]
+.SH DESCRIPTION
+.B tde-journal-viewer
+shows the messages collected by
+.BR systemd-journald (8).
+It reads either the system journal or the journal of the user's session
+and filters it by boot, priority, unit, syslog identifier, time range,
+message text (regular expression) and kernel messages. Messages are
+colored by priority; selecting a message shows all of its journal fields.
+New messages can be followed as they arrive, and the visible messages can
+be exported to a text file.
+.PP
+Normal users only see their own messages unless they are members of the
+\fBsystemd-journal\fR or \fBadm\fR group. The option \fIRead all as
+administrator\fR reads the complete journal through
+.BR tde-systemd-helper (8)
+after polkit authorization.
+.PP
+The \fIJournal Maintenance\fR dialog shows the disk usage of the journal
+and can vacuum old entries by size, age or number of files, rotate,
+flush, sync and verify the journal files, and show the active
+\fBjournald.conf\fR(5). These operations require authorization.
+.PP
+The same functionality is available as the TDE Control Center module
+\fBSystem Journal\fR (\fBtdecmshell tdejournal\fR).
+.SH OPTIONS
+.TP
+.BR \-u ", " \-\-user
+Show the journal of the user session instead of the system journal.
+.TP
+.BI \-\-unit " unit"
+Show only messages of \fIunit\fR.
+.TP
+.BR \-p ", " \-\-priority " \fIlevel\fR"
+Show only messages of priority \fIlevel\fR or more important, where 0 is
+emergency, 3 error, 4 warning, 6 info and 7 debug.
+.TP
+.BR \-b ", " \-\-boot " \fIoffset\fR"
+Show messages of the given boot: \fB0\fR is the current boot, \fB\-1\fR the
+previous one, \fBall\fR shows all boots.
+.TP
+.BR \-f ", " \-\-follow
+Follow new messages.
+.TP
+.B \-\-maintenance
+Open the journal maintenance dialog after start.
+.TP
+.B \-\-help
+Show a summary of the options.
+.SH KEYBOARD SHORTCUTS
+.TP
+.B F5
+Reload the journal with the current filter.
+.TP
+.B Ctrl+F
+Start or stop following new messages.
+.TP
+.B Ctrl+S
+Export the visible messages.
+.TP
+.B Ctrl+L
+Clear all filters.
+.TP
+.B Ctrl+M
+Open the maintenance dialog.
+.SH EXAMPLES
+.TP
+.B tde-journal-viewer \-\-unit ssh.service \-\-follow
+Watch the log of the SSH server.
+.TP
+.B tde-journal-viewer \-p 3 \-b \-1
+Show the errors of the previous boot.
+.SH SEE ALSO
+.BR tde-systemd-manager (1),
+.BR tde-systemd-helper (8),
+.BR journalctl (1),
+.BR systemd-journald (8),
+.BR journald.conf (5)
+.PP
+The complete handbook is available in the TDE Help Center
+(\fBkhelpcenter help:/tde-systemd/journal.html\fR).
+.SH AUTHORS
+tde-systemd developers, https://github.com/Yjlion/tde-systemd

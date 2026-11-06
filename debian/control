@@ -1,0 +1,41 @@
+Source: tde-systemd
+Section: admin
+Priority: optional
+Maintainer: Yjlion <32956705+Yjlion@users.noreply.github.com>
+Build-Depends: debhelper-compat (= 13),
+               cmake,
+               pkgconf | pkg-config,
+               tde-cmake,
+               tdelibs14-trinity-dev
+Standards-Version: 4.6.2
+Homepage: https://github.com/Yjlion/tde-systemd
+Vcs-Browser: https://github.com/Yjlion/tde-systemd
+Vcs-Git: https://github.com/Yjlion/tde-systemd.git
+Rules-Requires-Root: no
+
+Package: tde-systemd
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         systemd,
+         pkexec | policykit-1,
+         polkit-agent-tde
+Recommends: kcontrol-trinity
+Suggests: khelpcenter-trinity
+Description: systemd manager and journal viewer for TDE
+ Graphical tools to administer systemd from the Trinity Desktop
+ Environment:
+ .
+  * Systemd Manager: overview of the system state, start, stop, restart,
+    reload, enable, disable and mask system and user services and other
+    units, view their status, unit files, properties, dependencies and
+    logs, list timers, and change the date and time, time zone and NTP,
+    the hostname and the system locale and keyboard.
+  * Journal Viewer: read the system or user journal filtered by boot,
+    priority, unit, identifier, time and text, follow new messages,
+    export them, and perform journal maintenance (vacuum, rotate, flush,
+    sync, verify).
+  * TDE Control Center modules for both tools.
+ .
+ Changes to the system are authorized through polkit and carried out by
+ a small helper that validates every request.

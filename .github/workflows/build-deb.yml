@@ -1,0 +1,72 @@
+name: Build Debian packages
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Debian ${{ matrix.dist }}
+    runs-on: ubuntu-latest
+    container: debian:${{ matrix.dist }}
+    strategy:
+      fail-fast: false
+      matrix:
+        dist: [ bookworm, trixie ]
+
+    steps:
+      - name: Install git
+        run: apt-get update && apt-get install -y --no-install-recommends git ca-certificates
+
+      - name: Check out the sources
+        uses: actions/checkout@v4
+
+      - name: Build the packages
+        run: scripts/build-deb.sh ${{ matrix.dist }} dist
+
+      - name: Test the package installs
+        run: |
+          apt-get install -y --no-install-recommends man-db ./dist/tde-systemd_*.deb
+          test -x /opt/trinity/bin/tde-systemd-manager
+          test -x /opt/trinity/bin/tde-journal-viewer
+          test -f /opt/trinity/lib/trinity/kcm_tdesystemd.so
+          test -f /usr/share/polkit-1/actions/org.trinitydesktop.tde-systemd.policy
+          # the helper must refuse to work without root and reject bad input
+          useradd -m tester
+          if su tester -c "/opt/trinity/lib/trinity/libexec/tde-systemd-helper units start foo.service"; then exit 1; fi
+          /opt/trinity/lib/trinity/libexec/tde-systemd-helper units start '../evil' && exit 1 || test $? -eq 64
+          /opt/trinity/lib/trinity/libexec/tde-systemd-helper timedate set-timezone '../../etc/shadow' && exit 1 || test $? -eq 64
+          /opt/trinity/lib/trinity/libexec/tde-systemd-helper journal-read -f && exit 1 || test $? -eq 64
+          man -w tde-systemd-manager tde-journal-viewer tde-systemd-helper
+
+      - name: Upload the packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: tde-systemd-${{ matrix.dist }}
+          path: dist/*.deb
+          if-no-files-found: error
+
+  release:
+    name: Publish release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Attach the packages to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/tde-systemd_*.deb
+          generate_release_notes: true

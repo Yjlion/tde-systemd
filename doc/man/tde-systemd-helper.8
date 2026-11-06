@@ -1,0 +1,117 @@
+.\" Manual page for tde-systemd-helper
+.\" Copyright (C) 2026 tde-systemd developers
+.\" Licensed under the GNU General Public License version 2 or later.
+.TH TDE-SYSTEMD-HELPER 8 "November 2026" "tde-systemd 1.0.0" "Trinity Desktop Environment"
+.SH NAME
+tde-systemd-helper \- privileged helper of tde-systemd
+.SH SYNOPSIS
+.B pkexec
+.I /opt/trinity/lib/trinity/libexec/tde-systemd-helper
+.I category operation
+.RI [ arguments ...]
+.SH DESCRIPTION
+.B tde-systemd-helper
+carries out system changes for
+.BR tde-systemd-manager (1)
+and
+.BR tde-journal-viewer (1).
+It is not meant to be run directly. The graphical programs start it with
+.BR pkexec (1),
+which asks
+.BR polkit (8)
+for authorization. The first argument selects the polkit action, so
+administrators can grant or restrict each category separately.
+.PP
+The helper refuses to run unless it is started as root. It accepts only
+the operations listed below, validates every argument (unit names,
+host names, time zones, locale names, sizes, time spans and journal
+filters) and then executes the matching systemd tool directly, without a
+shell and with a minimal environment.
+.SH OPERATIONS
+.TP
+.BI "units " verb " " unit
+\fIverb\fR is one of start, stop, restart, reload, try-restart,
+reload-or-restart, enable, disable, reenable, mask, unmask, reset-failed
+or kill. Runs \fBsystemctl\fR \fIverb\fR \fIunit\fR.
+.TP
+.B units daemon-reload\fR | \fBunits reset-failed
+Manager wide operations.
+.br
+polkit action: \fBorg.trinitydesktop.tde-systemd.units\fR
+.TP
+.B journal rotate\fR | \fBflush\fR | \fBsync\fR | \fBverify\fR | \fBdisk-usage
+.TQ
+.BI "journal vacuum-size " size
+.TQ
+.BI "journal vacuum-time " span
+.TQ
+.BI "journal vacuum-files " count
+Journal maintenance through \fBjournalctl\fR.
+.br
+polkit action: \fBorg.trinitydesktop.tde-systemd.journal\fR
+.TP
+.BI "journal-read " "\fR[\fP-b boot\fR] [\fP-p prio\fR] [\fP-u unit\fR] [\fP-t ident\fR] [\fP-S since\fR] [\fP-U until\fR] [\fP-g regex\fR] [\fP-n lines\fR] [\fP-k\fR] [\fP-r\fR]"
+Print journal entries as JSON. Following (\fB\-f\fR) is not allowed.
+.br
+polkit action: \fBorg.trinitydesktop.tde-systemd.journal-read\fR
+.TP
+.B hostname set-hostname \fR|\fB set-pretty \fR|\fB set-icon \fR|\fB set-chassis \fR|\fB set-deployment \fR|\fB set-location \fIvalue
+Change the hostname and machine information through \fBhostnamectl\fR.
+.br
+polkit action: \fBorg.trinitydesktop.tde-systemd.hostname\fR
+.TP
+.BI "timedate set-time " "\(dqYYYY-MM-DD HH:MM:SS\(dq"
+.TQ
+.BI "timedate set-timezone " zone
+.TQ
+.BR "timedate set-ntp" | set-local-rtc " \fBtrue\fR|\fBfalse\fR"
+Change date and time through \fBtimedatectl\fR.
+.br
+polkit action: \fBorg.trinitydesktop.tde-systemd.timedate\fR
+.TP
+.BI "locale set-locale " VARIABLE=value ...
+.TQ
+.BI "locale set-keymap " keymap
+.TQ
+.BI "locale set-x11-keymap " "layout \fR[\fPmodel \fR[\fPvariant \fR[\fPoptions\fR]]]"
+Change the system locale and keyboard through \fBlocalectl\fR.
+.br
+polkit action: \fBorg.trinitydesktop.tde-systemd.locale\fR
+.SH EXIT STATUS
+The exit status of the executed tool, or
+.TP
+.B 64
+invalid operation or argument,
+.TP
+.B 77
+not started as root,
+.TP
+.B 126, 127
+the tool could not be executed (pkexec also uses these codes when
+authorization fails).
+.SH EXAMPLES
+Allow members of the group \fBsudo\fR to manage units without a password
+(\fI/etc/polkit-1/rules.d/50-tde-systemd.rules\fR):
+.PP
+.nf
+.RS
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.trinitydesktop.tde-systemd.units" &&
+        subject.isInGroup("sudo") && subject.local && subject.active)
+        return polkit.Result.YES;
+});
+.RE
+.fi
+.SH FILES
+.TP
+.I /usr/share/polkit-1/actions/org.trinitydesktop.tde-systemd.policy
+Definitions of the polkit actions.
+.SH SEE ALSO
+.BR tde-systemd-manager (1),
+.BR tde-journal-viewer (1),
+.BR pkexec (1),
+.BR polkit (8),
+.BR systemctl (1),
+.BR journalctl (1)
+.SH AUTHORS
+tde-systemd developers, https://github.com/Yjlion/tde-systemd
