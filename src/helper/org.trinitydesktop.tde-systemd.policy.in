@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+  <vendor>Trinity Desktop Environment</vendor>
+  <vendor_url>https://www.trinitydesktop.org/</vendor_url>
+  <icon_name>tde-systemd-manager</icon_name>
+
+  <action id="org.trinitydesktop.tde-systemd.units">
+    <description>Manage system services and units</description>
+    <message>Authentication is required to manage system services and units</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">@HELPER_PATH@</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">units</annotate>
+  </action>
+
+  <action id="org.trinitydesktop.tde-systemd.journal">
+    <description>Maintain the system journal</description>
+    <message>Authentication is required to perform maintenance on the system journal</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">@HELPER_PATH@</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">journal</annotate>
+  </action>
+
+  <action id="org.trinitydesktop.tde-systemd.journal-read">
+    <description>Read the complete system journal</description>
+    <message>Authentication is required to read the complete system journal</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">@HELPER_PATH@</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">journal-read</annotate>
+  </action>
+
+  <action id="org.trinitydesktop.tde-systemd.hostname">
+    <description>Change the system hostname</description>
+    <message>Authentication is required to change the hostname and machine information</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">@HELPER_PATH@</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">hostname</annotate>
+  </action>
+
+  <action id="org.trinitydesktop.tde-systemd.timedate">
+    <description>Change the system date and time</description>
+    <message>Authentication is required to change the system date, time or time zone</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">@HELPER_PATH@</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">timedate</annotate>
+  </action>
+
+  <action id="org.trinitydesktop.tde-systemd.locale">
+    <description>Change the system locale and keyboard</description>
+    <message>Authentication is required to change the system locale and keyboard layout</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">@HELPER_PATH@</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">locale</annotate>
+  </action>
+</policyconfig>

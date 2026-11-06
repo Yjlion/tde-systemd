@@ -1,0 +1,5 @@
+add_subdirectory( helper )
+add_subdirectory( common )
+add_subdirectory( manager )
+add_subdirectory( journal )
+tde_conditional_add_subdirectory( BUILD_KCM kcm )
