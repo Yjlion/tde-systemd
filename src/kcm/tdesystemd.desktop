@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=tdecmshell tdesystemd
+Icon=tde-systemd-manager
+X-TDE-ModuleType=Library
+X-TDE-Library=tdesystemd
+X-TDE-FactoryName=tdesystemd
+X-TDE-HasReadOnlyMode=false
+X-TDE-ParentApp=kcontrol
+X-DocPath=tde-systemd/index.html
+Name=Systemd Services
+Comment=Manage systemd services, timers, date and time, hostname and locale
+Keywords=systemd;services;units;timers;daemon;hostname;locale;time;date;ntp;
+Categories=Qt;TDE;X-TDE-settings-system;

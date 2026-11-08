@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=tde-journal-viewer %i %m -caption "%c"
+Icon=tde-journal-viewer
+X-DocPath=tde-systemd/journal.html
+Terminal=false
+Name=Journal Viewer
+GenericName=System Log Viewer
+Comment=View and maintain the systemd journal
+Keywords=systemd;journal;journald;log;logs;syslog;
+Categories=Qt;TDE;System;Monitor;

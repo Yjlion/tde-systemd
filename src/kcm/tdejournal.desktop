@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=tdecmshell tdejournal
+Icon=tde-journal-viewer
+X-TDE-ModuleType=Library
+X-TDE-Library=tdesystemd
+X-TDE-FactoryName=tdejournal
+X-TDE-HasReadOnlyMode=false
+X-TDE-ParentApp=kcontrol
+X-DocPath=tde-systemd/journal.html
+Name=System Journal
+Comment=View and maintain the systemd journal
+Keywords=systemd;journal;journald;log;logs;syslog;messages;vacuum;
+Categories=Qt;TDE;X-TDE-settings-system;

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Exec=tde-systemd-manager %i %m -caption "%c"
+Icon=tde-systemd-manager
+X-DocPath=tde-systemd/index.html
+Terminal=false
+Name=Systemd Manager
+GenericName=Service Manager
+Comment=Manage systemd services, timers and system settings
+Keywords=systemd;services;units;timers;daemon;
+Categories=Qt;TDE;System;Settings;

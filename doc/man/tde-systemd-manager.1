@@ -1,0 +1,87 @@
+.\" Manual page for tde-systemd-manager
+.\" Copyright (C) 2026 tde-systemd developers
+.\" Licensed under the GNU General Public License version 2 or later.
+.TH TDE-SYSTEMD-MANAGER 1 "November 2026" "tde-systemd 1.0.0" "Trinity Desktop Environment"
+.SH NAME
+tde-systemd-manager \- manage systemd services and system settings in TDE
+.SH SYNOPSIS
+.B tde-systemd-manager
+[\fB\-\-page\fR \fIname\fR]
+[\fB\-\-unit\fR \fIunit\fR [\fB\-\-user\fR]]
+[\fIgeneric TDE and Qt options\fR]
+.SH DESCRIPTION
+.B tde-systemd-manager
+is a graphical front end to
+.BR systemd (1)
+for the Trinity Desktop Environment. It shows the state of the system and
+lists the units of the system manager and of the user's service manager.
+Units can be started, stopped, restarted, reloaded, enabled, disabled,
+masked and unmasked; their status, unit file, properties, dependencies and
+log are shown. A timer overview shows when each timer last ran and when it
+runs next.
+.PP
+If the corresponding systemd services are installed, additional pages
+change the date, time, time zone and network time synchronization
+(\fBsystemd-timedated\fR), the hostname and machine information
+(\fBsystemd-hostnamed\fR), and the system locale and keyboard layout
+(\fBsystemd-localed\fR). These optional pages can be hidden in the
+\fISettings\fR menu.
+.PP
+Reading information never requires special rights. Changes to the system
+are carried out by
+.BR tde-systemd-helper (8)
+after authorization through
+.BR polkit (8);
+a polkit authentication agent such as \fBpolkit-agent-tde\fR must be
+running in the session. Operations on user units run directly with the
+user's rights.
+.PP
+The same functionality is available as the TDE Control Center module
+\fBSystemd Services\fR (\fBtdecmshell tdesystemd\fR).
+.SH OPTIONS
+.TP
+.BI \-\-page " name"
+Show the given page first. \fIname\fR is one of \fBoverview\fR,
+\fBservices\fR, \fBtimers\fR, \fBdatetime\fR, \fBhostname\fR or
+\fBlocale\fR.
+.TP
+.BI \-\-unit " unit"
+Show the services page and select \fIunit\fR, for example
+\fBsshd.service\fR.
+.TP
+.B \-\-user
+Look up the unit given with \fB\-\-unit\fR in the user's service manager
+instead of the system manager.
+.TP
+.B \-\-help
+Show a summary of the options. \fB\-\-help\-all\fR also lists the generic
+TDE and Qt options.
+.SH FILES
+.TP
+.I ~/.trinity/share/config/tde-systemdrc
+Settings, e.g. which optional pages are shown (group \fB[Pages]\fR, keys
+\fBShowDateTime\fR, \fBShowHostname\fR and \fBShowLocale\fR).
+.TP
+.I /usr/share/polkit-1/actions/org.trinitydesktop.tde-systemd.policy
+The polkit actions used for system changes.
+.SH EXAMPLES
+.TP
+.B tde-systemd-manager \-\-unit cups.service
+Open the manager with the CUPS service selected.
+.TP
+.B tde-systemd-manager \-\-page timers
+Show the timer overview.
+.SH SEE ALSO
+.BR tde-journal-viewer (1),
+.BR tde-systemd-helper (8),
+.BR systemctl (1),
+.BR timedatectl (1),
+.BR hostnamectl (1),
+.BR localectl (1),
+.BR pkexec (1),
+.BR polkit (8)
+.PP
+The complete handbook is available in the TDE Help Center
+(\fBkhelpcenter help:/tde-systemd\fR).
+.SH AUTHORS
+tde-systemd developers, https://github.com/Yjlion/tde-systemd

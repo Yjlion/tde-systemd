@@ -1,0 +1,11 @@
+/build/
+/obj-*/
+/debian/.debhelper/
+/debian/tde-systemd/
+/debian/tde-systemd.substvars
+/debian/*.debhelper.log
+/debian/debhelper-build-stamp
+/debian/files
+*.o
+*.moc
+/dist/
