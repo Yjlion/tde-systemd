@@ -40,7 +40,7 @@ sed -i "1s/(\([^)~]*\))/(\1~$DIST)/" debian/changelog
 dpkg-buildpackage -b -us -uc
 
 echo "==> lintian"
-lintian --info --display-info ../tde-systemd_*.changes || true
+lintian --info --display-info ../tde-systemd-trinity_*.changes || true
 
 mv ../*.deb "$OUT/"
 echo "==> Packages in $OUT:"

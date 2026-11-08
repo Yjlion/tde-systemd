@@ -69,7 +69,7 @@ The screenshots are created with `scripts/screenshots.sh`. It runs the applicati
 GitHub Actions builds packages for **Debian 12 bookworm** and **Debian 13 trixie** on every push. Download them from the workflow artifacts, or from the release page for tagged versions. You need the [TDE R14.1 repository](https://wiki.trinitydesktop.org/Debian_Trinity_Repository_Installation_Instructions) configured, then run:
 
 ```sh
-sudo apt install ./tde-systemd_1.0.0~bookworm_amd64.deb
+sudo apt install ./tde-systemd-trinity_1.0.1~bookworm_amd64.deb
 ```
 
 To build the package yourself in a clean container:

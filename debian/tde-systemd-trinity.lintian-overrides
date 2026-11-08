@@ -1,7 +1,7 @@
 # TDE is installed below /opt/trinity
-tde-systemd: dir-or-file-in-opt *
+tde-systemd-trinity: dir-or-file-in-opt *
 # the Control Center module is a plugin loaded by kcontrol
-tde-systemd: shared-library-lacks-prerequisites *
+tde-systemd-trinity: shared-library-lacks-prerequisites *
 # binaries linked against TQt/tdelibs end up without a GNU_RELRO segment,
 # like all TDE applications (BIND_NOW is set)
-tde-systemd: hardening-no-relro *
+tde-systemd-trinity: hardening-no-relro *

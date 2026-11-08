@@ -1,4 +1,4 @@
-Source: tde-systemd
+Source: tde-systemd-trinity
 Section: admin
 Priority: optional
 Maintainer: Yjlion <32956705+Yjlion@users.noreply.github.com>
@@ -13,8 +13,10 @@ Vcs-Browser: https://github.com/Yjlion/tde-systemd
 Vcs-Git: https://github.com/Yjlion/tde-systemd.git
 Rules-Requires-Root: no
 
-Package: tde-systemd
+Package: tde-systemd-trinity
 Architecture: any
+Breaks: tde-systemd (<< ${source:Version})
+Replaces: tde-systemd (<< ${source:Version})
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          systemd,

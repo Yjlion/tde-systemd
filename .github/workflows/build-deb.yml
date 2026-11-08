@@ -32,7 +32,7 @@ jobs:
 
       - name: Test the package installs
         run: |
-          apt-get install -y --no-install-recommends man-db ./dist/tde-systemd_*.deb
+          apt-get install -y --no-install-recommends man-db ./dist/tde-systemd-trinity_*.deb
           test -x /opt/trinity/bin/tde-systemd-manager
           test -x /opt/trinity/bin/tde-journal-viewer
           test -f /opt/trinity/lib/trinity/kcm_tdesystemd.so
@@ -68,5 +68,5 @@ jobs:
       - name: Attach the packages to the release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/tde-systemd_*.deb
+          files: dist/tde-systemd-trinity_*.deb
           generate_release_notes: true
