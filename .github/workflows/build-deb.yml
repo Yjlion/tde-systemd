@@ -25,7 +25,7 @@ jobs:
         run: apt-get update && apt-get install -y --no-install-recommends git ca-certificates
 
       - name: Check out the sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build the packages
         run: scripts/build-deb.sh ${{ matrix.dist }} dist
@@ -46,7 +46,7 @@ jobs:
           man -w tde-systemd-manager tde-journal-viewer tde-systemd-helper
 
       - name: Upload the packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tde-systemd-${{ matrix.dist }}
           path: dist/*.deb
@@ -60,13 +60,13 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: dist
           merge-multiple: true
 
       - name: Attach the packages to the release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: dist/tde-systemd-trinity_*.deb
           generate_release_notes: true
